@@ -109,8 +109,7 @@
 					</div>
 					<div class="text-center p-t-136">
 						<a style="cursor: pointer;" class="txt2" onclick='#'>
-							What about the name Sonder?
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+							What is Sonder?
 						</a>
 					</div>
 				</form>
@@ -173,30 +172,12 @@
 			data.append('sessionToken', results[1])
 			// data.append('password', password)
 			// var url = 'http://localhost:5000/login'
-			var url = 'https://glacial-temple-31521.herokuapp.com/login'
+			var url = 'https://gyftkgp.herokuapp.com/login'
 			var request = new XMLHttpRequest()
 			request.open("POST", url , true)
 			request.onload = function () {
     // do something to response
-    
-    // alert(this.responseText);
    download("Timetable.ics",this.responseText);
-    // window.open (this.responseText);
-      // results = eval(this.responseText);
-      // results = results['results'];
-
-//       html_1 = '<div class="modal-content">        <div class="modal-header">          <button type="button" class="close" data-dismiss="modal">&times;</button>' + 
-//           '<h4 class="modal-title">' + 'Similar users' + '</h4>        </div>        <div class="modal-body">          ';
-
-// html_1 += '<table style="width:100%">  <tr>    <th><center>Name</center></th>    <th><center>Similarity Score</center></th>     </tr>';
-// tmp = results[0][2]
-//           for (i=0;i<results.length;i++)
-//           	html_1 += '  <tr>    <td><center><a href="https://www.facebook.com/'+results[i][1]+'">' + results[i][0] + '</a> </td></center><td> <center>'+ Math.round((results[i][2]*100)/tmp) +'</center></td></tr>'
-
-
-//           html_1 += '</table>        </div>        <div class="modal-footer">          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        </div>      </div>';
-// 		$("#myModal .modal-dialog").html(html_1);
-//           $('#myModal').modal('show'); 
 $('#loading').hide();
 };
 			request.send(data)
@@ -213,32 +194,16 @@ $('#loading').hide();
 			data.append('user_id', username)
 			// data.append('password', password)
 			// var url = 'http://localhost:5000/getques'
-			var url = 'https://glacial-temple-31521.herokuapp.com/getques'
+			var url = 'https://gyftkgp.herokuapp.com/getques'
 			var request = new XMLHttpRequest()
 			request.open("POST", url , true)
 			request.onload = function () {
-    // do something to response
-    
-    // alert(this.responseText);
+
     
     console.log (this.responseText);
 
       results = eval(this.responseText);
     $('#divwrite').html(results[0]);
-      // results = results['results'];
-
-//       html_1 = '<div class="modal-content">        <div class="modal-header">          <button type="button" class="close" data-dismiss="modal">&times;</button>' + 
-//           '<h4 class="modal-title">' + 'Similar users' + '</h4>        </div>        <div class="modal-body">          ';
-
-// html_1 += '<table style="width:100%">  <tr>    <th><center>Name</center></th>    <th><center>Similarity Score</center></th>     </tr>';
-// tmp = results[0][2]
-//           for (i=0;i<results.length;i++)
-//           	html_1 += '  <tr>    <td><center><a href="https://www.facebook.com/'+results[i][1]+'">' + results[i][0] + '</a> </td></center><td> <center>'+ Math.round((results[i][2]*100)/tmp) +'</center></td></tr>'
-
-
-//           html_1 += '</table>        </div>        <div class="modal-footer">          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        </div>      </div>';
-// 		$("#myModal .modal-dialog").html(html_1);
-//           $('#myModal').modal('show'); 
 $('#loading').hide();
 };
 			request.send(data)
