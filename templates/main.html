@@ -165,8 +165,8 @@
 			data.append('password', password)
 			data.append('sessionToken', results[1])
 			// data.append('password', password)
-			var url = 'http://localhost:5000/login'
-			// var url = 'http://localhost:5000/user'
+			// var url = 'http://localhost:5000/login'
+			var url = 'https://glacial-temple-31521.herokuapp.com/login'
 			var request = new XMLHttpRequest()
 			request.open("POST", url , true)
 			request.onload = function () {
@@ -204,8 +204,8 @@
 
 			data.append('user_id', username)
 			// data.append('password', password)
-			var url = 'http://localhost:5000/getques'
-			// var url = 'http://localhost:5000/user'
+			// var url = 'http://localhost:5000/getques'
+			var url = 'https://glacial-temple-31521.herokuapp.com/getques'
 			var request = new XMLHttpRequest()
 			request.open("POST", url , true)
 			request.onload = function () {
