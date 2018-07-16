@@ -24,7 +24,7 @@
 <body>
 <style>
     #loading {
-    position: absolute; width: 100%; height: 100%; background: url('/static/spinner.gif') no-repeat center center;
+    position: absolute; width: 100%; height: 100%; background: url('/static/spinner2.gif') no-repeat center center;
 }
 </style>
 <div id="loading"></div>
@@ -57,8 +57,8 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="/static/assets/images/img-01.png" alt="IMG">
 				</div>
+<form id="loginform" class="login100-form validate-form" onkeypress="return event.keyCode != 13;" onsubmit="event.preventDefault(); ">
 
-				<form id="loginform" class="login100-form validate-form" onsubmit="event.preventDefault();">
 					<span class="login100-form-title">
 						Get your freaking timetable
 					</span>
@@ -103,16 +103,17 @@
 						</span>
 					</div>
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit" onclick="login(loginform);">
+						<button class="login100-form-btn" type="submit" onclick="login();">
 						Download ICS
 						</button>						
 					</div>
+					
 					<div class="text-center p-t-136">
 						<a style="cursor: pointer;" class="txt2" onclick='#'>
 							What is Sonder?
 						</a>
 					</div>
-				</form>
+					</form>
 
 			</div>
 		</div>
@@ -157,9 +158,10 @@
 
 	  document.body.removeChild(element);
 	}
-		var login = function(form) {
+	var temp = "";
+		var login = function() {
 			$('#loading').show();
-			console.log("call ho raha ")
+			// console.log("call ho raha ")
 			var data = new FormData()
 			var username = $('input[name=loginusername]').val()
 			var security_answer = $('input[name=securityanswer]').val()
@@ -172,20 +174,40 @@
 			data.append('sessionToken', results[1])
 			// data.append('password', password)
 			// var url = 'http://localhost:5000/login'
+			// console.log(data, username, security_answer, results[1]) 
 			var url = 'https://gyftkgp.herokuapp.com/login'
 			var request = new XMLHttpRequest()
 			request.open("POST", url , true)
+
+
 			request.onload = function () {
-    // do something to response
-   download("Timetable.ics",this.responseText);
-$('#loading').hide();
-};
+		    // do something to response
+
+			    if (!(request.readyState == XMLHttpRequest.DONE && request.status == 200) || this.responseText == "error occured") {
+			    	console.log("error");
+			    	// console.log(this.responseText);
+			    	console.log(request.readyState, request.status);
+			    	alert("Possibly some error occured. \nIs your password/secret answer correct? Try again!")
+			    	
+			    	// window.open("http://localhost:5000/", "_self");
+			    	window.open("https://gyftkgp.herokuapp.com", "_self");
+			    }
+			    else {
+			    	// console.log(this.responseText);
+			    	t = eval(this.responseText)
+			    	temp = t[0];
+			   		download("Timetable.ics", t[0]);
+			    }
+				$('#loading').hide();
+			};
+			// console.log("sending");
 			request.send(data)
+
 		}
 
 		var getSecurityQues = function() {
 			$('#loading').show();
-			console.log("call ho raha getsec ")
+			// console.log("call ho raha getsec ")
 			var data = new FormData()
 
 			var username = $('input[name=loginusername]').val()
@@ -193,6 +215,7 @@ $('#loading').hide();
 
 			data.append('user_id', username)
 			// data.append('password', password)
+			// console.log(data);
 			// var url = 'http://localhost:5000/getques'
 			var url = 'https://gyftkgp.herokuapp.com/getques'
 			var request = new XMLHttpRequest()
@@ -200,11 +223,18 @@ $('#loading').hide();
 			request.onload = function () {
 
     
-    console.log (this.responseText);
-
-      results = eval(this.responseText);
-    $('#divwrite').html(results[0]);
-$('#loading').hide();
+    // console.log (this.responseText);
+    		// do something to response
+		    if (this.responseText == "error occured"){
+		    	console.log("error");
+		    	alert("Possibly some error occured. \nIs your roll number correct? Try again!")
+			}
+		    else
+		    	{
+		    		results = eval(this.responseText);
+    				$('#divwrite').html(results[0]);
+    			}
+			$('#loading').hide();
 };
 			request.send(data)
 		}
